@@ -54,20 +54,13 @@ export default function App() {
   };
 
   const handleLogin = async () => {
-    const isLocalhost = window.location.hostname === "localhost";
-    const redirectTo = isLocalhost
-      ? "http://localhost:3000/auth/callback"
-      : "https://byte-pad.vercel.app/auth/callback";
-    console.log("Redirecting to:", redirectTo);
-    // Redirect to the OAuth provider
-    // This will open a new window for the user to log in
-    // and then redirect back to the specified URL
-    // with the authentication token
-    // in the URL parameters
-
+    const redirectUrl = 'https://byte-pad.vercel.app/auth/callback';
+    console.log('Redirecting to:', redirectUrl); // log it
     await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo }
+      options: {
+        redirectTo: redirectUrl,
+      },
     });
   };
 
