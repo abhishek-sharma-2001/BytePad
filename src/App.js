@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { supabase } from "./supabaseClient";
 import NoteEditor from "./components/NoteEditor";
 import NotesSidebar from "./components/NotesSidebar";
+import './index.css';
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -53,16 +54,14 @@ export default function App() {
   };
 
   const handleLogin = async () => {
-    const redirectUrl =
-      typeof window !== 'undefined'
-        ? "https://byte-pad.vercel.app/auth/callback"
-        : undefined;
+    const isLocalhost = window.location.hostname === "localhost";
+    const redirectTo = isLocalhost
+      ? "http://localhost:3000/auth/callback"
+      : "https://byte-pad.vercel.app/auth/callback";
 
     await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: {
-        redirectTo: 'https://byte-pad.vercel.app/auth/callback',
-      },
+      options: { redirectTo }
     });
   };
 
