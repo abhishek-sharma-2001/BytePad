@@ -61,7 +61,7 @@ export default function App() {
     await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: redirectUrl,
+        redirectTo: 'https://byte-pad.vercel.app/auth/callback',
       },
     });
   };
