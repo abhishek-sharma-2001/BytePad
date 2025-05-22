@@ -7,9 +7,9 @@ export default function App() {
   const [user, setUser] = useState(null);
   const [notes, setNotes] = useState([]);
   const [activeNote, setActiveNote] = useState(null);
-  console.log('Supabase URL:', process.env.REACT_APP_SUPABASE_URL);
-  console.log('Supabase Key:', process.env.REACT_APP_SUPABASE_KEY);
-  console.log('Supabase Client:', supabase);
+  // console.log('Supabase URL:', process.env.REACT_APP_SUPABASE_URL);
+  // console.log('Supabase Key:', process.env.REACT_APP_SUPABASE_KEY);
+  // console.log('Supabase Client:', supabase);
 
   useEffect(() => {
     const session = supabase.auth.getSession().then(({ data }) => {
