@@ -62,6 +62,12 @@ export default function App() {
         redirectTo: redirectUrl,
       },
     });
+    console.log("Using redirect:", window.location.origin + "/auth/callback");
+    window.location.href = redirectUrl;
+    // window.location.href = `${window.location.origin}/auth/callback`;
+    // window.location.href = `${window.location.origin}/auth/callback`;
+    // window.location.href = `${window.location.origin}/auth/callback`;
+    // window.location.href = `${window.location.origin}/auth/callback`;
   };
 
 
@@ -96,3 +102,7 @@ export default function App() {
     </div>
   );
 }
+supabase.auth.signOut(); // logs out
+localStorage.clear(); // clear stale session
+sessionStorage.clear(); // clear any flash OAuth state
+
