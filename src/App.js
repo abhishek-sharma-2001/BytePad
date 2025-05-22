@@ -8,12 +8,9 @@ export default function App() {
   const [user, setUser] = useState(null);
   const [notes, setNotes] = useState([]);
   const [activeNote, setActiveNote] = useState(null);
-  // console.log('Supabase URL:', process.env.REACT_APP_SUPABASE_URL);
-  // console.log('Supabase Key:', process.env.REACT_APP_SUPABASE_KEY);
-  // console.log('Supabase Client:', supabase);
 
   useEffect(() => {
-    const session = supabase.auth.getSession().then(({ data }) => {
+    supabase.auth.getSession().then(({ data }) => {
       setUser(data?.session?.user ?? null);
     });
 
@@ -41,7 +38,7 @@ export default function App() {
 
   const handleSaveNote = async (note) => {
     const isNew = !note.id;
-    const { data, error } = isNew
+    const { error } = isNew
       ? await supabase.from("notes").insert([{ ...note, user_id: user.id }])
       : await supabase.from("notes").update(note).eq("id", note.id);
 
@@ -54,22 +51,18 @@ export default function App() {
   };
 
   const handleLogin = async () => {
-    const redirectUrl = 'https://byte-pad.vercel.app/auth/callback';
-    console.log('Redirecting to:', redirectUrl); // log it
+    const redirectUrl =
+      typeof window !== 'undefined'
+        ? `${window.location.origin}/auth/callback`
+        : undefined;
+
     await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
         redirectTo: redirectUrl,
       },
     });
-    console.log("Using redirect:", window.location.origin + "/auth/callback");
-    window.location.href = redirectUrl;
-    // window.location.href = `${window.location.origin}/auth/callback`;
-    // window.location.href = `${window.location.origin}/auth/callback`;
-    // window.location.href = `${window.location.origin}/auth/callback`;
-    // window.location.href = `${window.location.origin}/auth/callback`;
   };
-
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -102,7 +95,3 @@ export default function App() {
     </div>
   );
 }
-supabase.auth.signOut(); // logs out
-localStorage.clear(); // clear stale session
-sessionStorage.clear(); // clear any flash OAuth state
-
