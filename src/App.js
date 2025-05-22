@@ -53,14 +53,19 @@ export default function App() {
   };
 
   const handleLogin = async () => {
+    const redirectUrl =
+      typeof window !== 'undefined'
+        ? `${window.location.origin}/auth/callback`
+        : undefined;
+
     await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: typeof window !== 'undefined' && window.location.origin + '/auth/callback'
-      }
+        redirectTo: redirectUrl,
+      },
     });
-
   };
+
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
