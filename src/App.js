@@ -55,7 +55,7 @@ export default function App() {
   const handleLogin = async () => {
     const redirectUrl =
       typeof window !== 'undefined'
-        ? `${window.location.origin}/auth/callback`
+        ? "https://byte-pad.vercel.app/auth/callback"
         : undefined;
 
     await supabase.auth.signInWithOAuth({
